@@ -2,6 +2,7 @@ package br.com.estudos.correios.controllers;
 
 import br.com.estudos.correios.domain.entity.RecentZipCodeSearch;
 import br.com.estudos.correios.domain.models.ZipCodeDTO;
+import br.com.estudos.correios.domain.models.ZipCodeSearchResponseDTO;
 import br.com.estudos.correios.services.ZipCodeSearchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,19 +15,19 @@ import java.util.List;
 @RequestMapping("/api/v1/CEP")
 public class ZipCodeController {
 
-    private final ZipCodeSearchService cepService;
+    private final ZipCodeSearchService zipCodeSearchService;
 
-    public ZipCodeController(ZipCodeSearchService cepService) {
-        this.cepService = cepService;
+    public ZipCodeController(ZipCodeSearchService zipCodeSearchService) {
+        this.zipCodeSearchService = zipCodeSearchService;
     }
 
     @PostMapping
-    public @ResponseBody ResponseEntity searchByCep(@Validated @RequestBody ZipCodeDTO cepDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(cepService.searchZipCode(cepDTO.getCEP()));
+    public @ResponseBody ResponseEntity<ZipCodeSearchResponseDTO> searchByZipCode(@Validated @RequestBody ZipCodeDTO cepDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(zipCodeSearchService.searchZipCode(cepDTO.getCEP()));
     }
 
     @GetMapping
     public @ResponseBody ResponseEntity<List<RecentZipCodeSearch>> getRecentSearchZipCode(){
-        return ResponseEntity.status(HttpStatus.OK).body(cepService.getRecentZipCodeSearches());
+        return ResponseEntity.status(HttpStatus.OK).body(zipCodeSearchService.getRecentZipCodeSearches());
     }
 }
