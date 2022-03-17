@@ -1,6 +1,8 @@
 package br.com.estudos.correios.controllers;
 
 import br.com.estudos.correios.domain.entity.RecentZipCodeSearch;
+import br.com.estudos.correios.domain.mappers.RecentZipCodeSearchMapper;
+import br.com.estudos.correios.domain.models.RecentZipCodeSearchDTO;
 import br.com.estudos.correios.domain.models.ZipCodeDTO;
 import br.com.estudos.correios.domain.models.ZipCodeSearchResponseDTO;
 import br.com.estudos.correios.services.ZipCodeSearchService;
@@ -31,6 +33,9 @@ class ZipCodeControllerTest {
 
     @Mock
     private ZipCodeSearchService zipCodeSearchService;
+
+    @Mock
+    private RecentZipCodeSearchMapper recentZipCodeSearchMapper;
 
     private ZipCodeSearchResponseDTO zipCodeSearchResponseDTO;
 
@@ -66,8 +71,8 @@ class ZipCodeControllerTest {
     @Test
     void whenGetRecentSearchZipCodeReturnTop10RegistersSuccess() {
         Mockito.when(zipCodeSearchService.getRecentZipCodeSearches()).thenReturn(this.recentZipCodeSearches);
-
-        ResponseEntity<List<RecentZipCodeSearch>> responseListRecenteZipCodeSearch = zipCodeController.getRecentSearchZipCode();
+        Mockito.when(recentZipCodeSearchMapper.map(Mockito.any())).thenReturn(RecentZipCodeSearchMapper.Instance.map(this.recentZipCodeSearches));
+        ResponseEntity<List<RecentZipCodeSearchDTO>> responseListRecenteZipCodeSearch = zipCodeController.getRecentSearchZipCode();
 
         Assertions.assertNotNull(responseListRecenteZipCodeSearch);
         Assertions.assertNotNull(responseListRecenteZipCodeSearch.getBody());
