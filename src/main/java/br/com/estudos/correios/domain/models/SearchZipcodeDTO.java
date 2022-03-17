@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ZipCodeSearchResponseDTO {
+public class SearchZipcodeDTO {
 
     @JsonProperty("cep")
     @ApiModelProperty(value = "CEP no formato 99999999")

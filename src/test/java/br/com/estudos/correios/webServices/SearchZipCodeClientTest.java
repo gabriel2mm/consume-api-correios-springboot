@@ -20,7 +20,7 @@ class SearchZipCodeClientTest {
     private SearchZipCodeClient searchZipCodeClient;
 
     @Test
-    public void searchCEPIntoServiceCorreios() {
+    public void whenSendZipcodeIntoServicesThenReturnResponseOfServices() {
         ConsultaCEPResponse response = searchZipCodeClient.getCEP(CEP);
 
         Assertions.assertNotNull(response);

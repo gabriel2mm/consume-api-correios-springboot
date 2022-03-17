@@ -1,10 +1,9 @@
 package br.com.estudos.correios.controllers;
 
-import br.com.estudos.correios.domain.entity.RecentZipCodeSearch;
 import br.com.estudos.correios.domain.mappers.RecentZipCodeSearchMapper;
-import br.com.estudos.correios.domain.models.RecentZipCodeSearchDTO;
-import br.com.estudos.correios.domain.models.ZipCodeDTO;
-import br.com.estudos.correios.domain.models.ZipCodeSearchResponseDTO;
+import br.com.estudos.correios.domain.models.ZipcodeSearchHistoryDTO;
+import br.com.estudos.correios.domain.models.ZipcodeDTO;
+import br.com.estudos.correios.domain.models.SearchZipcodeDTO;
 import br.com.estudos.correios.services.ZipCodeSearchService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -41,9 +40,9 @@ public class ZipCodeController {
             @ApiResponse(code = 400, message = "Erro ao salvar informações no duplicadas no banco de dados."),
     })
     @PostMapping
-    public @ResponseBody ResponseEntity<ZipCodeSearchResponseDTO> searchByZipCode(@Validated @RequestBody ZipCodeDTO zipCodeDTO){
-        LOGGER.debug(MessageFormat.format("Chamando a consulta de cep : {0}.", zipCodeDTO.getCEP()));
-        return ResponseEntity.status(HttpStatus.OK).body(zipCodeSearchService.searchZipCode(zipCodeDTO.getCEP()));
+    public @ResponseBody ResponseEntity<SearchZipcodeDTO> searchByZipCode(@Validated @RequestBody ZipcodeDTO zipCodeDTO){
+        LOGGER.debug(MessageFormat.format("Chamando a consulta de cep : {0}.", zipCodeDTO.getZipcode()));
+        return ResponseEntity.status(HttpStatus.OK).body(zipCodeSearchService.searchZipCode(zipCodeDTO.getZipcode()));
     }
 
     @ApiOperation(value = "Retorna uma lista dos últimos 10 CEPS pesquisados na API.")
@@ -51,8 +50,11 @@ public class ZipCodeController {
             @ApiResponse(code = 200, message = "Retorna a lista com os útimos 10 CEPS pesquisados."),
     })
     @GetMapping
-    public @ResponseBody ResponseEntity<List<RecentZipCodeSearchDTO>> getRecentSearchZipCode(){
+    public @ResponseBody ResponseEntity<List<ZipcodeSearchHistoryDTO>> getRecentSearchZipCode(){
         LOGGER.debug("Realizando a chamada do histórico de CEP.");
-        return ResponseEntity.status(HttpStatus.OK).body(recentZipCodeSearchMapper.map(zipCodeSearchService.getRecentZipCodeSearches()));
+        return ResponseEntity.status(HttpStatus.OK).body(
+                recentZipCodeSearchMapper.map(
+                        zipCodeSearchService.getRecentZipCodeSearches()
+                ));
     }
 }

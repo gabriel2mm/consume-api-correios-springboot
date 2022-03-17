@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecentZipCodeSearchDTO {
+public class ZipcodeSearchHistoryDTO {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long Id;

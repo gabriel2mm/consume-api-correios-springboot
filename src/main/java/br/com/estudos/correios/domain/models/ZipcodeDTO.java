@@ -15,13 +15,13 @@ import javax.validation.constraints.Pattern;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ZipCodeDTO {
+public class ZipcodeDTO {
 
     @Length(min = 8)
     @NotBlank @NotNull
     @Pattern(regexp = "^[0-9]{8}$", message = "Valor de CEP inválido!")
     @JsonProperty(value = "cep", required = true)
     @ApiModelProperty(value = "CEP no formato 99999999")
-    private String CEP;
+    private String zipcode;
 
 }

@@ -2,7 +2,7 @@ package br.com.estudos.correios.services;
 
 import br.com.estudos.correios.domain.entity.RecentZipCodeSearch;
 import br.com.estudos.correios.domain.exception.ObjectNotFound;
-import br.com.estudos.correios.domain.models.ZipCodeSearchResponseDTO;
+import br.com.estudos.correios.domain.models.SearchZipcodeDTO;
 import br.com.estudos.correios.repository.RecentZipCodeSearchRepository;
 import br.com.estudos.correios.webServices.SearchZipCodeClient;
 import br.com.webservices.correios.stub.ConsultaCEPResponse;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ZipCodeSearchService {
@@ -23,14 +24,11 @@ public class ZipCodeSearchService {
         this.recentZipCodeSearchRepository = recentZipCodeSearchRepository;
     }
 
-    public ZipCodeSearchResponseDTO searchZipCode(final String CEP){
-        ConsultaCEPResponse response = searchZipCodeClient.getCEP(CEP);
+    public SearchZipcodeDTO searchZipCode(final String CEP){
+        ConsultaCEPResponse response = Optional.ofNullable(searchZipCodeClient.getCEP(CEP))
+                .orElseThrow(() -> new ObjectNotFound("Zipcode not found."));
 
-        if(response == null || response.getReturn() == null){
-            throw new ObjectNotFound("CEP inexistente!");
-        }
-
-        ZipCodeSearchResponseDTO searchCEPDTO = new ZipCodeSearchResponseDTO(
+        SearchZipcodeDTO searchCEPDTO = new SearchZipcodeDTO(
                 response.getReturn().getCep(),
                 response.getReturn().getUf(),
                 response.getReturn().getBairro(),
@@ -43,17 +41,15 @@ public class ZipCodeSearchService {
     }
 
     public void createRecentSearchCEP(final String zipCode){
-        RecentZipCodeSearch recentZipCodeSearch = recentZipCodeSearchRepository.findByZipCode(zipCode);
+        RecentZipCodeSearch recentZipCodeSearch =
+                Optional.ofNullable(recentZipCodeSearchRepository.findByZipCode(zipCode))
+                        .orElse( new RecentZipCodeSearch(null, zipCode, LocalDateTime.now(), 1));
 
-        if(recentZipCodeSearch == null){
-            recentZipCodeSearch = new RecentZipCodeSearch();
-            recentZipCodeSearch.setZipCode(zipCode);
-            recentZipCodeSearch.setNumberQueries(1);
-            recentZipCodeSearch.setUpdated(LocalDateTime.now());
-        }else{
+        if(recentZipCodeSearch.getId() != null){
             recentZipCodeSearch.setNumberQueries(recentZipCodeSearch.getNumberQueries() + 1);
             recentZipCodeSearch.setUpdated(LocalDateTime.now());
         }
+
         recentZipCodeSearchRepository.saveAndFlush(recentZipCodeSearch);
     }
 

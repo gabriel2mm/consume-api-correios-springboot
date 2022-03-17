@@ -1,7 +1,7 @@
 package br.com.estudos.correios.domain.mappers;
 
 import br.com.estudos.correios.domain.entity.RecentZipCodeSearch;
-import br.com.estudos.correios.domain.models.RecentZipCodeSearchDTO;
+import br.com.estudos.correios.domain.models.ZipcodeSearchHistoryDTO;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,18 +21,18 @@ public abstract class RecentZipCodeSearchMapper {
             @Mapping(target="updated", source = "recentZipCodeSearchDTO.updated"),
             @Mapping(target="numberQueries", source = "recentZipCodeSearchDTO.numberQueries"),
     })
-    public abstract RecentZipCodeSearch fromDTO(RecentZipCodeSearchDTO recentZipCodeSearchDTO);
+    public abstract RecentZipCodeSearch fromDTO(ZipcodeSearchHistoryDTO recentZipCodeSearchDTO);
 
     @Mappings({
             @Mapping(target="zipCode", source = "recentZipCodeSearch.zipCode"),
             @Mapping(target="updated", source = "recentZipCodeSearch.updated"),
             @Mapping(target="numberQueries", source = "recentZipCodeSearch.numberQueries"),
     })
-    public abstract RecentZipCodeSearchDTO toDTO(RecentZipCodeSearch recentZipCodeSearch);
+    public abstract ZipcodeSearchHistoryDTO toDTO(RecentZipCodeSearch recentZipCodeSearch);
 
     @IterableMapping(qualifiedByName = "toDTO")
-    public List<RecentZipCodeSearchDTO> map(List<RecentZipCodeSearch> children){
-        List<RecentZipCodeSearchDTO> list = new ArrayList<>();
+    public List<ZipcodeSearchHistoryDTO> map(List<RecentZipCodeSearch> children){
+        List<ZipcodeSearchHistoryDTO> list = new ArrayList<>();
         for (RecentZipCodeSearch recentZipCodeSearch : children) {
             list.add(this.toDTO(recentZipCodeSearch));
         }

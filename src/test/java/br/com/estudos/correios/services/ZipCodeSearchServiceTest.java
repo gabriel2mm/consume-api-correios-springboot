@@ -2,7 +2,7 @@ package br.com.estudos.correios.services;
 
 import br.com.estudos.correios.domain.entity.RecentZipCodeSearch;
 import br.com.estudos.correios.domain.exception.ObjectNotFound;
-import br.com.estudos.correios.domain.models.ZipCodeSearchResponseDTO;
+import br.com.estudos.correios.domain.models.SearchZipcodeDTO;
 import br.com.estudos.correios.repository.RecentZipCodeSearchRepository;
 import br.com.estudos.correios.webServices.SearchZipCodeClient;
 import br.com.webservices.correios.stub.ConsultaCEPResponse;
@@ -48,12 +48,12 @@ class ZipCodeSearchServiceTest {
     }
 
     @Test
-    void whenExistsZipCodeRecenteSearchThenSumNumberOfQueries() {
+    void whenExistsZipCodeRecentSearchThenSumNumberOfQueries() {
         Mockito.when(searchZipCodeClient.getCEP(Mockito.anyString())).thenReturn(this.consultaCEPResponse);
         Mockito.when(recentZipCodeSearchRepository.findByZipCode(Mockito.anyString())).thenReturn(this.recentZipCodeSearch);
         Mockito.when(recentZipCodeSearchRepository.saveAndFlush(Mockito.any())).thenReturn(null);
 
-        ZipCodeSearchResponseDTO zipCodeSearchResponseDTO = zipCodeSearchService.searchZipCode(CEP);
+        SearchZipcodeDTO zipCodeSearchResponseDTO = zipCodeSearchService.searchZipCode(CEP);
 
         Assertions.assertNotNull(zipCodeSearchResponseDTO);
         Assertions.assertEquals(CEP, zipCodeSearchResponseDTO.getCEP());
@@ -66,7 +66,7 @@ class ZipCodeSearchServiceTest {
         Mockito.when(recentZipCodeSearchRepository.findByZipCode(Mockito.anyString())).thenReturn(null);
         Mockito.when(recentZipCodeSearchRepository.saveAndFlush(Mockito.any())).thenReturn(null);
 
-        ZipCodeSearchResponseDTO zipCodeSearchResponseDTO = zipCodeSearchService.searchZipCode(CEP);
+        SearchZipcodeDTO zipCodeSearchResponseDTO = zipCodeSearchService.searchZipCode(CEP);
 
         Assertions.assertNotNull(zipCodeSearchResponseDTO);
         Assertions.assertEquals(CEP, zipCodeSearchResponseDTO.getCEP());
@@ -80,11 +80,11 @@ class ZipCodeSearchServiceTest {
         Mockito.when(recentZipCodeSearchRepository.saveAndFlush(Mockito.any())).thenReturn(null);
 
         Throwable exception = Assertions.assertThrows(ObjectNotFound.class, () -> zipCodeSearchService.searchZipCode(CEP));
-        Assertions.assertEquals("CEP inexistente!", exception.getMessage());
+        Assertions.assertEquals("Zipcode not found.", exception.getMessage());
     }
 
     @Test
-    void getRecentZipCodeSearches() {
+    void whenRequestAllZipcodesThenReturnRecentSearchesList() {
         Mockito.when(recentZipCodeSearchRepository.findAllZipCode()).thenReturn(this.recentZipCodeSearches);
         List<RecentZipCodeSearch> recentZipCodeSearches = zipCodeSearchService.getRecentZipCodeSearches();
 
