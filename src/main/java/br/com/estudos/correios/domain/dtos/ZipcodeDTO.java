@@ -1,4 +1,4 @@
-package br.com.estudos.correios.domain.models;
+package br.com.estudos.correios.domain.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;

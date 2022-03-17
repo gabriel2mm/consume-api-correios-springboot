@@ -1,9 +1,8 @@
-package br.com.estudos.correios.domain.models;
+package br.com.estudos.correios.domain.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.time.LocalDateTime;
 
 @Data

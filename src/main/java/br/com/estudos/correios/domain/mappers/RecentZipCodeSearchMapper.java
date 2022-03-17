@@ -1,7 +1,7 @@
 package br.com.estudos.correios.domain.mappers;
 
 import br.com.estudos.correios.domain.entity.RecentZipCodeSearch;
-import br.com.estudos.correios.domain.models.ZipcodeSearchHistoryDTO;
+import br.com.estudos.correios.domain.dtos.ZipcodeSearchHistoryDTO;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

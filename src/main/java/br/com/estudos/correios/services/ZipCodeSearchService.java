@@ -1,8 +1,10 @@
 package br.com.estudos.correios.services;
 
+import br.com.estudos.correios.domain.dtos.ZipcodeSearchHistoryDTO;
 import br.com.estudos.correios.domain.entity.RecentZipCodeSearch;
+import br.com.estudos.correios.domain.dtos.SearchZipcodeDTO;
 import br.com.estudos.correios.domain.exception.ObjectNotFound;
-import br.com.estudos.correios.domain.models.SearchZipcodeDTO;
+import br.com.estudos.correios.domain.mappers.RecentZipCodeSearchMapper;
 import br.com.estudos.correios.repository.RecentZipCodeSearchRepository;
 import br.com.estudos.correios.webServices.SearchZipCodeClient;
 import br.com.webservices.correios.stub.ConsultaCEPResponse;
@@ -16,11 +18,14 @@ import java.util.Optional;
 public class ZipCodeSearchService {
 
     private final SearchZipCodeClient searchZipCodeClient;
+    private final RecentZipCodeSearchMapper recentZipCodeSearchMapper;
     private final RecentZipCodeSearchRepository recentZipCodeSearchRepository;
 
     public ZipCodeSearchService(SearchZipCodeClient searchZipCodeClient,
+                                RecentZipCodeSearchMapper recentZipCodeSearchMapper,
                                 RecentZipCodeSearchRepository recentZipCodeSearchRepository) {
         this.searchZipCodeClient = searchZipCodeClient;
+        this.recentZipCodeSearchMapper = recentZipCodeSearchMapper;
         this.recentZipCodeSearchRepository = recentZipCodeSearchRepository;
     }
 
@@ -41,11 +46,10 @@ public class ZipCodeSearchService {
     }
 
     public void createRecentSearchCEP(final String zipCode){
-        RecentZipCodeSearch recentZipCodeSearch =
-                Optional.ofNullable(recentZipCodeSearchRepository.findByZipCode(zipCode))
-                        .orElse( new RecentZipCodeSearch(null, zipCode, LocalDateTime.now(), 1));
+        RecentZipCodeSearch recentZipCodeSearch = recentZipCodeSearchRepository.findByZipCode(zipCode)
+                        .orElse(new RecentZipCodeSearch(null, zipCode, LocalDateTime.now(), 1));
 
-        if(recentZipCodeSearch.getId() != null){
+        if(recentZipCodeSearch != null && recentZipCodeSearch.getId() != null){
             recentZipCodeSearch.setNumberQueries(recentZipCodeSearch.getNumberQueries() + 1);
             recentZipCodeSearch.setUpdated(LocalDateTime.now());
         }
@@ -53,8 +57,8 @@ public class ZipCodeSearchService {
         recentZipCodeSearchRepository.saveAndFlush(recentZipCodeSearch);
     }
 
-    public List<RecentZipCodeSearch> getRecentZipCodeSearches(){
-        return this.recentZipCodeSearchRepository.findAllZipCode();
+    public List<ZipcodeSearchHistoryDTO> getRecentZipCodeSearches(){
+        return recentZipCodeSearchMapper.map(recentZipCodeSearchRepository.findAllZipCode());
     }
 
 }

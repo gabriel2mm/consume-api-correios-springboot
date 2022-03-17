@@ -2,7 +2,7 @@ package br.com.estudos.correios.controllers;
 
 import br.com.estudos.correios.domain.exception.ObjectNotFound;
 import br.com.estudos.correios.domain.exception.SQLErrorSintaxException;
-import br.com.estudos.correios.domain.models.ErrorDTO;
+import br.com.estudos.correios.domain.dtos.ErrorDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

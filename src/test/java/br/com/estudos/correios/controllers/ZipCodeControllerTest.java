@@ -2,9 +2,9 @@ package br.com.estudos.correios.controllers;
 
 import br.com.estudos.correios.domain.entity.RecentZipCodeSearch;
 import br.com.estudos.correios.domain.mappers.RecentZipCodeSearchMapper;
-import br.com.estudos.correios.domain.models.ZipcodeSearchHistoryDTO;
-import br.com.estudos.correios.domain.models.ZipcodeDTO;
-import br.com.estudos.correios.domain.models.SearchZipcodeDTO;
+import br.com.estudos.correios.domain.dtos.ZipcodeSearchHistoryDTO;
+import br.com.estudos.correios.domain.dtos.ZipcodeDTO;
+import br.com.estudos.correios.domain.dtos.SearchZipcodeDTO;
 import br.com.estudos.correios.services.ZipCodeSearchService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +36,7 @@ class ZipCodeControllerTest {
 
     private SearchZipcodeDTO zipCodeSearchResponseDTO;
 
-    private List<RecentZipCodeSearch> recentZipCodeSearches;
+    private List<ZipcodeSearchHistoryDTO> recentZipCodeSearches;
 
     private static final String CEP = "81230170";
 
@@ -68,7 +68,7 @@ class ZipCodeControllerTest {
     @Test
     void whenGetRecentSearchesZipCodeReturnTop10RegistersSuccess() {
         Mockito.when(zipCodeSearchService.getRecentZipCodeSearches()).thenReturn(this.recentZipCodeSearches);
-        Mockito.when(recentZipCodeSearchMapper.map(Mockito.any())).thenReturn(RecentZipCodeSearchMapper.Instance.map(this.recentZipCodeSearches));
+        Mockito.when(recentZipCodeSearchMapper.map(Mockito.any())).thenReturn(this.recentZipCodeSearches);
         ResponseEntity<List<ZipcodeSearchHistoryDTO>> responseListRecenteZipCodeSearch = zipCodeController.getRecentSearchZipCode();
 
         Assertions.assertNotNull(responseListRecenteZipCodeSearch);
@@ -82,12 +82,12 @@ class ZipCodeControllerTest {
     }
 
     private void startZipCodeSearchResponseDTO(){
-        this.zipCodeSearchResponseDTO = new SearchZipcodeDTO("81230170", "PR","Campo Comprido", "Curitiba", "Rua Renato Polatti" );
+        zipCodeSearchResponseDTO = new SearchZipcodeDTO("81230170", "PR","Campo Comprido", "Curitiba", "Rua Renato Polatti" );
     }
 
     private void startListRecentZipCodeSearch(){
         recentZipCodeSearches = new ArrayList<>(){{
-            add(new RecentZipCodeSearch(null, "81230170", LocalDateTime.now(), 1));
+            add(new ZipcodeSearchHistoryDTO(null, CEP, LocalDateTime.now(), 1));
         }};
     }
 }
