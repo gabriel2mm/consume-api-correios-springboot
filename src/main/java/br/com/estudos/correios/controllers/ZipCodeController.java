@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/CEP")
+@RequestMapping("/api/v1/zip-code")
 public class ZipCodeController {
 
     private final ZipCodeSearchService zipCodeSearchService;
@@ -22,8 +22,8 @@ public class ZipCodeController {
     }
 
     @PostMapping
-    public @ResponseBody ResponseEntity<ZipCodeSearchResponseDTO> searchByZipCode(@Validated @RequestBody ZipCodeDTO cepDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(zipCodeSearchService.searchZipCode(cepDTO.getCEP()));
+    public @ResponseBody ResponseEntity<ZipCodeSearchResponseDTO> searchByZipCode(@Validated @RequestBody ZipCodeDTO zipCodeDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(zipCodeSearchService.searchZipCode(zipCodeDTO.getCEP()));
     }
 
     @GetMapping

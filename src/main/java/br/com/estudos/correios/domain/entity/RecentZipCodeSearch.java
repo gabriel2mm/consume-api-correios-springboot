@@ -1,5 +1,6 @@
 package br.com.estudos.correios.domain.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="tb_pesquisas_recentes")
 public class RecentZipCodeSearch {
