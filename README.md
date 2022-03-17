@@ -1,34 +1,34 @@
-# IntegraÁ„o correios springboot + junit 5
+<h1 id="title">Integra√ß√£o correios springboot + junit 5</h1>
 
 ## Badges
 ![GitHub Org's stars](https://img.shields.io/github/stars/gabriel2mm?style=social)
 
 ![GitHub Org's stars](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
-## Õndice
-* [TÌtulo](#title)
+## Summary
+* [T√≠tulo](#title)
 * [Badges](#Badges)
-* [Õndice](#Ìndice)
-* [DescriÁ„o do Projeto](#DescriÁ„o)
-* [PendÍncias](#PendÍncias)
-* [LicenÁa](#LicenÁa)
+* [√çndice](#Summary)
+* [Descri√ß√£o do Projeto](#Description)
+* [Pend√™ncias](#Pendencies)
+* [Licen√ßa](#License)
 
-## DescriÁ„o
+## Description
 
-Este projeto foi utilizado como estudo para implementaÁ„o de melhores pr·ticas de desenvolvimento
-e testes unit·rios utilizando springboot com junit 5. 
+This project was used as a study to implement best development practices
+and unit tests using springboot with junit 5.
 
-Para realizaÁ„o do  estudo foi implementado a integraÁ„o com os serviÁos do correios busca de CEP.
+To carry out the study of implementation of an integration with postal services, search for CEP.
 
-## Autor
+## Author
 
-| [<img src="https://avatars.githubusercontent.com/u/16054681?v=4" width=115><br><sub>Gabriel MorÈ Maia</sub>](https://github.com/gabriel2mm) |
+| [<img src="https://avatars.githubusercontent.com/u/16054681?v=4" width=115><br><sub>Gabriel Mor√© Maia</sub>](https://github.com/gabriel2mm) |
 |:-------------------------------------------------------------------------------------------------------------------------------------------:|
 
-## PendÍncias
+## Pendencies
 
-- ImplementaÁ„o de documentaÁ„o Swagger.
+- nothing
 
-## LicenÁa
+## License
 
-Este projeto È licenciado pelo MIT licensed.
+Este projeto √© licenciado pelo MIT licensed.
