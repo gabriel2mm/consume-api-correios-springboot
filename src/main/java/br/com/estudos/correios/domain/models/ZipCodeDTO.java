@@ -14,6 +14,7 @@ import javax.validation.constraints.Pattern;
 
 @Getter @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ZipCodeDTO {
 
     @Length(min = 8)
