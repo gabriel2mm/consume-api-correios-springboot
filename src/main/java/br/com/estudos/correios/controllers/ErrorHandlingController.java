@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.time.LocalDateTime;
 
+@ApiIgnore
 @ControllerAdvice
 public class ErrorHandlingController extends ResponseEntityExceptionHandler {
 
