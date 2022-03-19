@@ -1,6 +1,5 @@
 package br.com.estudos.correios.controllers;
 
-import br.com.estudos.correios.domain.mappers.RecentZipCodeSearchMapper;
 import br.com.estudos.correios.domain.dtos.ZipcodeSearchHistoryDTO;
 import br.com.estudos.correios.domain.dtos.ZipcodeDTO;
 import br.com.estudos.correios.domain.dtos.SearchZipcodeDTO;
@@ -20,7 +19,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/zip-code")
-@ApiOperation(value="Api visualizar consulta e histórico de pesquisa de CEP.")
 public class ZipCodeController {
 
     private final ZipCodeSearchService zipCodeSearchService;
@@ -36,7 +34,6 @@ public class ZipCodeController {
             @ApiResponse(code = 400, message = "Erro ao salvar informações no duplicadas no banco de dados."),
     })
     @PostMapping
-    @ResponseBody
     public ResponseEntity<SearchZipcodeDTO> searchByZipCode(@Validated @RequestBody ZipcodeDTO zipCodeDTO){
         log.debug(MessageFormat.format("Chamando a consulta de cep : {0}.", zipCodeDTO.getZipcode()));
         return ResponseEntity.status(HttpStatus.OK).body(zipCodeSearchService.searchZipCode(zipCodeDTO.getZipcode()));
@@ -47,7 +44,6 @@ public class ZipCodeController {
             @ApiResponse(code = 200, message = "Retorna a lista com os útimos 10 CEPS pesquisados."),
     })
     @GetMapping
-    @ResponseBody
     public ResponseEntity<List<ZipcodeSearchHistoryDTO>> getRecentSearchZipCode(){
         log.debug("Realizando a chamada do histórico de CEP.");
         return ResponseEntity.status(HttpStatus.OK).body(zipCodeSearchService.getRecentZipCodeSearches());

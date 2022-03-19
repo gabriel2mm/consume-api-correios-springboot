@@ -8,6 +8,7 @@ import br.com.estudos.correios.domain.mappers.RecentZipCodeSearchMapper;
 import br.com.estudos.correios.repository.RecentZipCodeSearchRepository;
 import br.com.estudos.correios.webServices.SearchZipCodeClient;
 import br.com.webservices.correios.stub.ConsultaCEPResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,19 +16,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ZipCodeSearchService {
 
     private final SearchZipCodeClient searchZipCodeClient;
     private final RecentZipCodeSearchMapper recentZipCodeSearchMapper;
     private final RecentZipCodeSearchRepository recentZipCodeSearchRepository;
-
-    public ZipCodeSearchService(SearchZipCodeClient searchZipCodeClient,
-                                RecentZipCodeSearchMapper recentZipCodeSearchMapper,
-                                RecentZipCodeSearchRepository recentZipCodeSearchRepository) {
-        this.searchZipCodeClient = searchZipCodeClient;
-        this.recentZipCodeSearchMapper = recentZipCodeSearchMapper;
-        this.recentZipCodeSearchRepository = recentZipCodeSearchRepository;
-    }
 
     public SearchZipcodeDTO searchZipCode(final String CEP){
         ConsultaCEPResponse response = Optional.ofNullable(searchZipCodeClient.getCEP(CEP))
